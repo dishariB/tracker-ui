@@ -23,7 +23,7 @@ class IssueEdit extends React.Component {
     }`;
 
     const { params: { id } } = match;
-    const result = await graphQLFetch(query, { id }, showError);
+    const result = await graphQLFetch(query, { id: parseInt(id, 10) }, showError);
     return result;
   }
 
@@ -91,7 +91,7 @@ class IssueEdit extends React.Component {
 
     const { id, created, ...changes } = issue;
     const { showSuccess, showError } = this.props;
-    const data = await graphQLFetch(query, { changes, id }, showError);
+    const data = await graphQLFetch(query, { changes, id: parseInt(id, 10) }, showError);
     if (data) {
       this.setState({ issue: data.issueUpdate });
       showSuccess('Updated issue successfully');
@@ -130,7 +130,7 @@ class IssueEdit extends React.Component {
     if (Object.keys(invalidFields).length !== 0 && showingValidation) {
       validationMessage = (
         <Alert bsStyle="danger" onDismiss={this.dismissValidation}>
-           Please correct invalid fields before submitting.
+          Please correct invalid fields before submitting.
         </Alert>
       );
     }
